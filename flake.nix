@@ -19,15 +19,15 @@
         nix-direnv.enable = true;
       };
       environment.systemPackages =
-        [ 
-          pkgs.neovim
-          pkgs.oh-my-posh
-          pkgs.yazi
-          pkgs.mas
-          pkgs.direnv
-          pkgs.nix-direnv
-          pkgs.tmux
-          pkgs.mpv
+        with pkgs; [ 
+          neovim
+          oh-my-posh
+          yazi
+          mas
+          direnv
+          nix-direnv
+          tmux
+          mpv
         ];
       homebrew = {
         enable = true;
