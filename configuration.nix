@@ -6,36 +6,10 @@
   ... 
 }:
 {
-  # imports = [ inputs.mnw.darwinModules.default ];
-
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
-
-  #   programs.mnw = {
-  #   enable = true;
-  #   initLua = ''
-  #     require("myconfig")
-  #   '';
-  #   plugins = {
-  #     start = [
-  #       pkgs.vimPlugins.oil-nvim
-  #     ];
-  #
-  #     dev.myconfig = {
-  #       pure = ./nvim;
-  #       impure =
-  #         # This is a hack it should be a absolute path
-  #         # here it'll only work from this directory
-  #         "/' .. vim.uv.cwd()  .. '/nvim";
-  #     };
-  #   };
-  # };
+  imports = [ inputs.mnw.darwinModules.default ];
 
   environment.systemPackages =
     with pkgs; [ 
-      neovim
       oh-my-posh
       yazi
       mas
@@ -74,6 +48,29 @@
       "Tailscale" = 1475387142;
     };
   };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
+  programs.mnw = {
+    enable = true;
+    initLua = ''
+      require("config")
+      require('lz.n').load('lazy')
+    '';
+    plugins = {
+      start = [
+        pkgs.vimPlugins.lz-n
+      ];
+      dev.config = {
+        pure = ./nvim;
+        impure = "/Users/dan/.config/nix/nvim";
+      };
+    };
+  };
+
 
   nix.settings.experimental-features = "nix-command flakes";
 

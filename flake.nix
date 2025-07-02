@@ -5,10 +5,10 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # mnw.url = "github:Gerg-L/mnw";
+    mnw.url = "github:Gerg-L/mnw";
   };
 
-  outputs = { self, nix-darwin, nixpkgs, home-manager }@inputs: #, mnw }:
+  outputs = { self, nix-darwin, nixpkgs, home-manager, mnw }@inputs:
   {
     darwinConfigurations."dan-MacbookAir-6" = nix-darwin.lib.darwinSystem {
       modules = [

@@ -51,11 +51,5 @@
     };
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
-  };
-
   home.stateVersion = "25.05";
 }
