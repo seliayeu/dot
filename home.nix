@@ -36,6 +36,11 @@
     userEmail = "dan.seliayeu@gmail.com";
   };
 
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+  };
+
   programs.starship = {
     enable = true;
     settings = {
