@@ -9,21 +9,31 @@
   };
 
   outputs = { self, nix-darwin, nixpkgs, home-manager, mnw }@inputs:
-  {
-    darwinConfigurations."dan-MacbookAir-6" = nix-darwin.lib.darwinSystem {
+  let
+    mkDarwinHost = {
+      name,
+      system,
+      specialArgs ? {},
+    }:nix-darwin.lib.darwinSystem {
       modules = [
-        ./configuration.nix
+        ./hosts/${name}
         home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.dan = import ./home.nix;
+            home-manager.users.dan = import ./home/${name}.nix;
           }
       ];
       specialArgs = {
         inherit inputs;
         flake = self;
-      };
+      } // specialArgs;
+    };
+  in {
+    nixosConfigurations = { };
+    darwinConfigurations.hoshizora = mkDarwinHost {
+      name = "hoshizora";
+      system = "aarch64-darwin";
     };
   };
 }

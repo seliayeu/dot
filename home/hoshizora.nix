@@ -11,6 +11,7 @@
     jq
     yq-go
     zoxide
+    eza
     fzf
     bat
 
@@ -22,10 +23,11 @@
     gawk
     zstd
     gnupg
-
     glow
-
     btop
+    tiny
+    pass
+    syncthing
   ];
 
   programs.home-manager.enable = true;
@@ -39,16 +41,22 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    initContent = ''
+autoload -U select-word-style
+select-word-style bash
+eval "$(zoxide init zsh)"
+alias ls=eza
+alias cd=z
+    '';
   };
 
-  programs.starship = {
+  programs.zoxide = {
     enable = true;
-    settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
-    };
+    enableZshIntegration = true;
+  };
+
+  services.syncthing = {
+    enable = true;
   };
 
   home.stateVersion = "25.05";

@@ -40,7 +40,7 @@
       "mullvadvpn"
       "zotero"
       "anki"
-      "font-zed-mono-nerd-font"
+      "thunderbird"
     ];
     masApps = {
       "Xcode" = 497799835;
@@ -58,19 +58,33 @@
     enable = true;
     initLua = ''
       require("config")
-      require('lz.n').load('lazy')
+      require("lz.n").load("plugins")
     '';
+    extraBinPath = 
+      with pkgs; [
+        deadnix
+        statix
+        nil
+
+        lua-language-server
+        stylua
+
+        clang-tools
+
+        ripgrep
+        fd
+      ];
     plugins = {
       start = [
         pkgs.vimPlugins.lz-n
+        pkgs.vimPlugins.nvim-lspconfig
       ];
       dev.config = {
-        pure = ./nvim;
+        pure = ../../nvim;
         impure = "/Users/dan/.config/nix/nvim";
       };
     };
   };
-
 
   nix.settings.experimental-features = "nix-command flakes";
 
