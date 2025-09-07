@@ -2,7 +2,8 @@ return {
   "nvim-lspconfig",
   lazy = false,
   after = function()
-    vim.lsp.enable("clangd", { cmd = { "clangd", "--log=verbose" } })
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, { desc = 'LSP signature help' })
+    vim.lsp.enable("clangd")
+    vim.lsp.enable("lua_ls")
+    vim.lsp.enable("nixd")
   end
 }
