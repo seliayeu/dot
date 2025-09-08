@@ -60,24 +60,21 @@
       require("config")
       require("lz.n").load("plugins")
     '';
-    extraBinPath = 
-      with pkgs; [
-        deadnix
-        statix
-        nil
-
-        lua-language-server
-        stylua
-
-        clang-tools
-
-        ripgrep
-        fd
-      ];
+    extraBinPath = with pkgs; [
+      nixd
+      statix
+      nil
+      lua-language-server
+      stylua
+      clang-tools
+      ripgrep
+      fd
+    ];
     plugins = {
-      start = [
-        pkgs.vimPlugins.lz-n
-        pkgs.vimPlugins.nvim-lspconfig
+      start = with pkgs; [
+        vimPlugins.lz-n
+        vimPlugins.gruvbox-nvim
+        vimPlugins.nvim-lspconfig
       ];
       dev.config = {
         pure = ../../nvim;

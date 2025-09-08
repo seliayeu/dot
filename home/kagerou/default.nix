@@ -254,9 +254,6 @@
       };
     };
   };
-  programs.tiny = {
-    enable = true;
-  };
   programs.mnw = {
     enable = true;
     desktopEntry = false;
@@ -288,6 +285,7 @@
     };
   };
   programs.tiny = {
+    enable = true;
     settings = {
       servers = [
         {

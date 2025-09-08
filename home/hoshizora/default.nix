@@ -1,7 +1,7 @@
 { config, pkgs, ... }: {
   home.username = "dan";
   home.homeDirectory = "/Users/dan";
-
+  # programs.home-manager.enable = true;
   home.packages = with pkgs; [
     zip
     xz
@@ -28,9 +28,12 @@
     tiny
     pass
     syncthing
+    zulu24
   ];
 
-  programs.home-manager.enable = true;
+  imports = [
+    ../tiny.nix
+  ];
 
   programs.git = {
     enable = true;
