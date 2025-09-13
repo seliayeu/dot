@@ -6,8 +6,6 @@
   ... 
 }:
 {
-  imports = [ inputs.mnw.darwinModules.default ];
-
   environment.systemPackages =
     with pkgs; [ 
       oh-my-posh
@@ -52,35 +50,6 @@
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-  };
-
-  programs.mnw = {
-    enable = true;
-    initLua = ''
-      require("config")
-      require("lz.n").load("plugins")
-    '';
-    extraBinPath = with pkgs; [
-      nixd
-      statix
-      nil
-      lua-language-server
-      stylua
-      clang-tools
-      ripgrep
-      fd
-    ];
-    plugins = {
-      start = with pkgs; [
-        vimPlugins.lz-n
-        vimPlugins.gruvbox-nvim
-        vimPlugins.nvim-lspconfig
-      ];
-      dev.config = {
-        pure = ../../nvim;
-        impure = "/Users/dan/.config/nix/nvim";
-      };
-    };
   };
 
   nix.settings.experimental-features = "nix-command flakes";

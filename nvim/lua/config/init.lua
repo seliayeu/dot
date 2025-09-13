@@ -15,3 +15,5 @@ vim.o.undofile = true
 vim.o.smartcase = true
 vim.opt.termguicolors = true
 vim.wo.signcolumn = "yes"
+
+vim.g.loaded_netrwPlugin = 0
