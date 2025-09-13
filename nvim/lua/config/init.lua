@@ -1,8 +1,8 @@
 vim.loader.enable()
 
-vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false})
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 vim.o.ignorecase = true
 vim.o.wrap = false
@@ -15,5 +15,3 @@ vim.o.undofile = true
 vim.o.smartcase = true
 vim.opt.termguicolors = true
 vim.wo.signcolumn = "yes"
-
-vim.g.loaded_netrwPlugin = 0

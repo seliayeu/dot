@@ -177,6 +177,11 @@
       select-word-style bash
       eval "$(zoxide init zsh)"
     '';
+    sessionVariables = {
+      EDITOR = "nvim";
+      SUDO_EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
   };
   services.wpaperd = {
     enable = true;
@@ -277,12 +282,17 @@
         vimPlugins.lz-n
         vimPlugins.nvim-lspconfig
         vimPlugins.gruvbox-nvim
+        vimPlugins.snacks-nvim
       ];
       dev.config = {
         pure = ../../nvim;
         impure = "/home/dotuncle/.config/nixos/nvim";
       };
     };
+  };
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
   };
   programs.tiny = {
     enable = true;
