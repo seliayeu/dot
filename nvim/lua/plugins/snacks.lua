@@ -12,7 +12,8 @@ return {
       replace_netrw = true,
     }
   },
-  keys = {
-    { "<leader>e", function() Snacks.explorer() end, desc = "File Explorer" },
-  }
+  after = function()
+    require("snacks").setup()
+    vim.keymap.set('n', '<space>e', function() Snacks.explorer() end)
+  end,
 }
