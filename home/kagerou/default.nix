@@ -41,6 +41,13 @@
     zenity
     zotero
     xfce.thunar
+    slurp
+    grim
+    wezterm
+    tldr
+    ripgrep
+    fzf
+    fortune
   ];
   wayland.windowManager.sway = {
     enable = true;
@@ -48,7 +55,7 @@
       modifier = "Mod4";
       keybindings = lib.mkOptionDefault {
         "${modifier}+space" = "exec tofi-drun | xargs swaymsg exec --";
-        "${modifier}+Return" = "exec kitty";
+        "${modifier}+Return" = "exec wezterm";
         "${modifier}+Ctrl+Shift+h" = "move workspace to output left";
         "${modifier}+Ctrl+Shift+k" = "move workspace to output up";
         "${modifier}+Ctrl+Shift+j" = "move workspace to output down";
@@ -56,6 +63,10 @@
         "${modifier}+Shift+f" = "bar mode toggle";
         "${modifier}+comma" = "layout toggle tabbed stacking";
         "${modifier}+period" = "layout toggle default split";
+        "XF86AudioMute" = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "XF86AudioRaiseVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+        "XF86AudioLowerVolume" = "exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+        "Alt+Shift+4" = "exec slurp | grim -g - - | wl-copy";
       };
       input = {
       	"9610:4103:SINOWEALTH_Wired_Gaming_Mouse" = {
@@ -64,16 +75,16 @@
         };
       };
       assigns = {
-        "1" = [{ app_id = "kitty"; }];
+        "1" = [{ app_id = "wezterm"; }];
         "2" = [{ app_id = "zen-beta"; }];
       };
       gaps = {
         inner = 4;
         outer = 4;
       };
-      terminal = "kitty";
+      terminal = "wezterm";
       startup = [
-        { command = "kitty"; }
+        { command = "wezterm"; }
         { command = "zen-beta"; }
         { command = "swaymsg workspace 2"; }
       ];
@@ -144,6 +155,29 @@
       padding = 5;
     };
   };
+  programs.wezterm = {
+    enable = true;
+    extraConfig = ''
+      return {
+        font = wezterm.font {
+          family = 'Iosevka Nerd Font Mono',
+          weight = 'Medium',
+        },
+        font_size = 10.5,
+        window_padding = {
+          left = 8,
+          right = 8,
+          top = 4,
+          bottom = 4,
+        },
+        color_scheme = "GruvboxDarkHard",
+        window_background_opacity = 0.8,
+        audible_bell = "Disabled",
+        enable_tab_bar = false,
+        front_end = "WebGpu",
+      }
+    '';
+  };
   programs.kitty = {
     enable = true;
     font = {
@@ -157,7 +191,6 @@
       enable_audio_bell = false;
     };
     shellIntegration.enableZshIntegration = true;
-
   };
   programs.git = {
     enable = true;
@@ -176,6 +209,7 @@
       autoload -U select-word-style
       select-word-style bash
       eval "$(zoxide init zsh)"
+      setopt rmstarsilent
     '';
     sessionVariables = {
       EDITOR = "nvim";
@@ -282,7 +316,17 @@
         vimPlugins.lz-n
         vimPlugins.nvim-lspconfig
         vimPlugins.gruvbox-nvim
-        vimPlugins.snacks-nvim
+        {
+          pname = "snacks.nvim";
+          version = "2.28.0";
+          name = "snacks.nvim-2.28.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "folke";
+            repo = "snacks.nvim";
+            tag = "v2.28.0";
+            hash = "sha256-Kr8NbQ4V0ShJktqQDygd6NN6A6szkcVMlTxhQjjs/AE=";
+          };
+        }
       ];
       dev.config = {
         pure = ../../nvim;
@@ -411,6 +455,10 @@
   };
   programs.tmux = {
     enable = true;
+    extraConfig = ''
+      set -g extended-keys on
+      set -as terminal-features 'xterm*:extkeys'
+    '';
   };
   services.syncthing = {
     enable = true;
@@ -453,5 +501,4 @@
     };
   };
   home.stateVersion = "25.05";
-  home.sessionVariables.TERMCMD = "kitty --class=file_chooser";
 }

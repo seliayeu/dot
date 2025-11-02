@@ -10,6 +10,7 @@
   boot.loader.grub.useOSProber = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "nvme_core.default_ps_max_latency_us=0" ];
 
   networking.hostName = "kagerou";
   networking.networkmanager.enable = true;
@@ -42,7 +43,16 @@
     pkgs.tailscale
     pkgs.deluge
     pkgs.gnused
+    pkgs.direnv
+    pkgs.nix-direnv
+    pkgs.nvme-cli
+    pkgs.smartmontools
   ];
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   environment.variables.editor = "vim";
   environment.sessionVariables = {
