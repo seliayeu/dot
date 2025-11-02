@@ -5,7 +5,7 @@
   home.homeDirectory = "/home/dotuncle";
   home.packages = with pkgs; [
     neovim
-    inputs.zen-browser.packages."${system}".default
+    inputs.zen-browser.packages."${stdenv.hostPlatform.system}".default
     tofi
     kitty
     git
@@ -162,6 +162,7 @@
         font = wezterm.font {
           family = 'Iosevka Nerd Font Mono',
           weight = 'Medium',
+          harfbuzz_features = { 'liga=0' },
         },
         font_size = 10.5,
         window_padding = {
@@ -194,8 +195,10 @@
   };
   programs.git = {
     enable = true;
-    userName = "Danila Seliayeu";
-    userEmail = "dan.seliayeu@gmail.com";
+    settings.user = {
+      email = "dan.seliayeu@gmail.com";
+      name = "Danila Seliayeu";
+    };
   };
   programs.zsh = {
     enable = true;
@@ -257,11 +260,12 @@
   };
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
-    serverAliveInterval = 60;
+    enableDefaultConfig = false;
     matchBlocks = {
       "*" = {
         identityFile = "~/.ssh/id_rsa";
+        addKeysToAgent = "yes";
+        serverAliveInterval = 60;
       };
       "innis" = {
         user = "seliayeu";
